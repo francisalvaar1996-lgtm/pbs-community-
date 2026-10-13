@@ -449,15 +449,16 @@
         .addEventListener("submit", function(event) {
             event.preventDefault();
 
-            mods.unshift({
-                nombre: document.getElementById("nombre").value.trim(),
-                autor: document.getElementById("autor").value.trim(),
-                categoria: document.getElementById("categoria").value,
-                version: document.getElementById("version").value.trim(),
-                descripcion: document.getElementById("descripcion").value.trim(),
-                enlace: document.getElementById("enlace").value.trim(),
-                likes: 0
-            });
+          
+mods.unshift({
+    nombre: document.getElementById("nombre").value.trim(),
+    autor: document.getElementById("autor").value.trim(),
+    categoria: document.getElementById("categoria").value,
+    descripcion: document.getElementById("descripcion").value.trim(),
+    enlace: document.getElementById("enlace").value.trim(),
+    likes: 0
+});
+
 
             guardar();
             this.reset();
