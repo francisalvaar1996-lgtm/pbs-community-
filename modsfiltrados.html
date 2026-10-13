@@ -1,0 +1,482 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PBS Community</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #000000;
+            color: #f2f4fa;
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%;
+            border-bottom: 1px solid #292e3a;
+        }
+
+        .logo {
+            font-size: 23px;
+            font-weight: bold;
+            color: #a9c9ff;
+        }
+
+        button {
+            border: none;
+            padding: 12px 18px;
+            border-radius: 14px;
+            background: #a9c9ff;
+            color: #101a2a;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #c6dcff;
+        }
+
+        .hero {
+            padding: 65px 8% 40px;
+        }
+
+        .hero h1 {
+            font-size: clamp(35px, 6vw, 65px);
+            margin-bottom: 15px;
+        }
+
+        .hero h1 span {
+            color: #a9c9ff;
+        }
+
+        .hero p {
+            color: #a4adbd;
+            max-width: 600px;
+            line-height: 1.7;
+        }
+
+        main {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: 25px;
+            padding: 20px 8% 60px;
+        }
+
+        aside, .publicacion, .formulario {
+            background: #141821;
+            border: 1px solid #292e3a;
+            border-radius: 20px;
+        }
+
+        aside {
+            padding: 18px;
+            height: fit-content;
+        }
+
+        aside h3 {
+            color: #929db0;
+            font-size: 13px;
+            text-transform: uppercase;
+        }
+
+        .categoria {
+            display: block;
+            width: 100%;
+            text-align: left;
+            margin: 8px 0;
+            background: transparent;
+            color: #c4cada;
+        }
+
+        .categoria.activa {
+            background: #243651;
+            color: #c6dcff;
+        }
+
+        .barra {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 22px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #343b4a;
+            border-radius: 12px;
+            background: #0d1017;
+            color: white;
+            outline: none;
+        }
+
+        .barra input {
+            flex: 1;
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+        #publicaciones {
+            display: grid;
+            gap: 15px;
+        }
+
+        .publicacion {
+            padding: 20px;
+        }
+
+        .publicacion h3 {
+            margin: 12px 0 8px;
+        }
+
+        .publicacion p {
+            color: #a4adbd;
+            line-height: 1.6;
+        }
+
+        .etiqueta {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 20px;
+            background: #243651;
+            color: #b9d5ff;
+            font-size: 12px;
+        }
+
+        .datos {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            color: #929db0;
+            font-size: 13px;
+        }
+
+        .datos button {
+            padding: 8px 12px;
+        }
+
+        .formulario {
+            display: none;
+            padding: 22px;
+            margin-bottom: 22px;
+        }
+
+        .formulario input,
+        .formulario select,
+        .formulario textarea {
+            margin: 7px 0 14px;
+        }
+
+        .formulario label {
+            font-size: 14px;
+            color: #c4cada;
+        }
+
+        .formulario textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        footer {
+            padding: 25px;
+            text-align: center;
+            color: #778195;
+            border-top: 1px solid #292e3a;
+        }
+
+        @media (max-width: 700px) {
+            main {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+
+            header {
+                padding: 18px 20px;
+            }
+
+            .hero {
+                padding: 45px 20px 25px;
+            }
+
+            aside {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 5px;
+            }
+
+            aside h3 {
+                width: 100%;
+            }
+
+            .categoria {
+                width: auto;
+            }
+
+            .barra {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Pbs Community</div>
+    <button onclick="mostrarFormulario()">＋ Publicar mod</button>
+</header>
+
+<section class="hero">
+    <h1>Comparte tus mods.<br>
+        <span>se libre!</span>
+    </h1>
+
+    <p>
+        Un espacio para compartir buses, skins y mapas
+        de Proton Bus Simulator para toda la comunidad.
+    </p>
+
+    <button onclick="mostrarFormulario()">Compartir un mod</button>
+</section>
+
+<main>
+
+    <aside>
+        <h3>Categorías</h3>
+
+        <button class="categoria activa"
+            onclick="filtrar('Todos', this)">Todos los mods</button>
+
+        <button class="categoria"
+            onclick="filtrar('Buses', this)">🚌 Buses</button>
+
+        <button class="categoria"
+            onclick="filtrar('Skins', this)">🎨 Skins</button>
+
+        <button class="categoria"
+            onclick="filtrar('Mapas', this)">🗺️ Mapas</button>
+
+    </aside>
+
+    <section>
+        <div class="formulario" id="formulario">
+            <h2>Publicar un mod</h2>
+
+            <form id="formMod">
+                <label>Nombre del mod</label>
+                <input id="nombre" required
+                    placeholder="Ej. Irizar i8">
+
+                <label>Autor</label>
+                <input id="autor" required
+                    placeholder="Nombre del creador">
+
+                <label>Categoría</label>
+                <select id="categoria">
+                    <option>Buses</option>
+                    <option>Skins</option>
+                    <option>Mapas</option>
+                </select>
+
+                <label>Descripción</label>
+                <textarea id="descripcion" required
+                    placeholder="Información del mod..."></textarea>
+
+                <label>Enlace de descarga</label>
+                <input id="enlace" type="url"
+                    placeholder="https://...">
+
+                <button type="submit">Publicar</button>
+                <button type="button"
+                    onclick="mostrarFormulario()">Cancelar</button>
+            </form>
+        </div>
+
+        <div class="barra">
+            <input id="busqueda"
+                placeholder="Buscar mods..."
+                oninput="renderizar()">
+
+            <button onclick="document.getElementById('busqueda').value='';renderizar()">
+                Limpiar
+            </button>
+        </div>
+
+        <h2>Mods de la comunidad</h2>
+
+        <div id="publicaciones"></div>
+    </section>
+
+</main>
+
+<footer>
+    PBS Community · Foro comunitario oficial
+</footer>
+
+<script>
+    const ejemplos = [
+        {
+            nombre: "Irizar i8",
+            autor: "BusFan MX",
+            categoria: "Buses",
+            descripcion: "Ejemplo de publicación de un autobús para Proton Bus Simulator.",
+            enlace: ""
+        },
+        {
+            nombre: "Pack de skins mexicanas",
+            autor: "Mau Designs",
+            categoria: "Skins",
+            descripcion: "Ejemplo de un paquete de pinturas para personalizar tus autobuses.",
+            enlace: ""
+        },
+        {
+            nombre: "Mapa urbano",
+            autor: "Ruta Creativa",
+            categoria: "Mapas",
+            descripcion: "Ejemplo de mapa para recorrer calles y rutas urbanas.",
+            enlace: ""
+        }
+    ];
+
+    let mods = [...ejemplos];
+    let categoriaActual = "Todos";
+
+    function mostrarFormulario() {
+        const formulario = document.getElementById("formulario");
+
+        formulario.style.display =
+            formulario.style.display === "block" ? "none" : "block";
+    }
+
+    function filtrar(categoria, boton) {
+        categoriaActual = categoria;
+
+        document.querySelectorAll(".categoria").forEach(b => {
+            b.classList.remove("activa");
+        });
+
+        boton.classList.add("activa");
+        renderizar();
+    }
+
+    function escapar(texto) {
+        return String(texto).replace(/[&<>"']/g, caracter => ({
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;"
+        })[caracter]);
+    }
+
+    function renderizar() {
+        const contenedor = document.getElementById("publicaciones");
+        const busqueda = document.getElementById("busqueda")
+            .value.toLowerCase();
+
+        const filtrados = mods.filter(mod => {
+            const coincideCategoria =
+                categoriaActual === "Todos" ||
+                mod.categoria === categoriaActual;
+
+            const coincideTexto =
+                (mod.nombre + " " + mod.autor + " " +
+                mod.descripcion).toLowerCase().includes(busqueda);
+
+            return coincideCategoria && coincideTexto;
+        });
+
+        if (filtrados.length === 0) {
+            contenedor.innerHTML =
+                "<p>No se encontraron mods.</p>";
+            return;
+        }
+
+        contenedor.innerHTML = filtrados.map((mod, indice) => `
+            <article class="publicacion">
+                <span class="etiqueta">${escapar(mod.categoria)}</span>
+                <h3>${escapar(mod.nombre)}</h3>
+                <p>${escapar(mod.descripcion)}</p>
+
+                <div class="datos">
+                    <span>Por ${escapar(mod.autor)}</span>
+                    <span>PBS ${escapar(mod.version || "No indicada")}</span>
+
+                    ${mod.enlace ? `
+                        <a href="${escapar(mod.enlace)}"
+                           target="_blank"
+                           rel="noopener noreferrer">
+                            Descargar ↗
+                        </a>
+                    ` : ""}
+
+                    <button onclick="darLike(${mods.indexOf(mod)})">
+                        ♡ ${mod.likes || 0}
+                    </button>
+                </div>
+            </article>
+        `).join("");
+    }
+
+    function darLike(indice) {
+        mods[indice].likes = (mods[indice].likes || 0) + 1;
+        guardar();
+        renderizar();
+    }
+
+    function guardar() {
+        try {
+            localStorage.setItem("pbsMods", JSON.stringify(mods));
+        } catch (error) {
+            console.log("No se pudieron guardar los mods.");
+        }
+    }
+
+    document.getElementById("formMod")
+        .addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            mods.unshift({
+                nombre: document.getElementById("nombre").value.trim(),
+                autor: document.getElementById("autor").value.trim(),
+                categoria: document.getElementById("categoria").value,
+                version: document.getElementById("version").value.trim(),
+                descripcion: document.getElementById("descripcion").value.trim(),
+                enlace: document.getElementById("enlace").value.trim(),
+                likes: 0
+            });
+
+            guardar();
+            this.reset();
+            document.getElementById("formulario").style.display = "none";
+            renderizar();
+        });
+
+    try {
+        const guardados = JSON.parse(localStorage.getItem("pbsMods") || "null");
+
+        if (Array.isArray(guardados)) {
+            mods = guardados;
+        }
+    } catch (error) {
+        console.log("Se mostrarán las publicaciones de ejemplo.");
+    }
+
+    renderizar();
+</script>
+
+</body>
+</html>
